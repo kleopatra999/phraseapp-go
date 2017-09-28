@@ -3865,6 +3865,23 @@ func (client *Client) LocaleShow(project_id, id string) (*LocaleDetails, error) 
 	return retVal, err
 }
 
+// Unverify an existing locale.
+func (client *Client) LocaleUnverify(project_id, id string) error {
+
+	err := func() error {
+		url := fmt.Sprintf("/v2/projects/%s/locales/%s/unverify", project_id, id)
+
+		rc, err := client.sendRequest("PATCH", url, "", nil, 200)
+		if err != nil {
+			return err
+		}
+		defer rc.Close()
+
+		return nil
+	}()
+	return err
+}
+
 // Update an existing locale.
 func (client *Client) LocaleUpdate(project_id, id string, params *LocaleParams) (*LocaleDetails, error) {
 	retVal := new(LocaleDetails)
@@ -3894,6 +3911,23 @@ func (client *Client) LocaleUpdate(project_id, id string, params *LocaleParams) 
 
 	}()
 	return retVal, err
+}
+
+// Verify an existing locale.
+func (client *Client) LocaleVerify(project_id, id string) error {
+
+	err := func() error {
+		url := fmt.Sprintf("/v2/projects/%s/locales/%s/verify", project_id, id)
+
+		rc, err := client.sendRequest("PATCH", url, "", nil, 200)
+		if err != nil {
+			return err
+		}
+		defer rc.Close()
+
+		return nil
+	}()
+	return err
 }
 
 // List all locales for the given project.
